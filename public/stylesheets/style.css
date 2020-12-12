@@ -12,12 +12,8 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
-}
-form {
-  width: fit-content;
-  margin: 20px auto;
+div#app {
+  margin: 20px 50px;
 }
 
 table {
@@ -39,12 +35,20 @@ table tbody tr:hover {
   color: white;
 }
 
-.showUser {
+article.showUser {
   display: flex;
   flex-direction: column;
 }
 
-.showUser > * {
+article.showUser > section {
+  display: flex;
+  flex-direction: row;
   padding: 5px;
-  margin: 5px 30px;
+  margin: 5px 0;
+}
+
+
+.modal {
+  z-index: 1;
+  
 }

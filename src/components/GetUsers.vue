@@ -28,6 +28,8 @@
                 </tr>
             </tbody>
         </table>
+
+        <button type="button" @click="createNewUser">Добавить</button>
     </div>
 </template>
 
@@ -80,8 +82,10 @@
                     window.location.href = '/users/' + userId;
                 }
             },
-
             
+            createNewUser() {
+                  window.location.href = '/users/new';
+            }
         }
     }
 </script>
