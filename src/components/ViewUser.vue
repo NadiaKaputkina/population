@@ -111,36 +111,33 @@
                     </option>
                 </select>
             </label>
+        </section>
 
-            <div>
-                <a href="" @click.prevent="getChildren(user.Id)">Дети</a>
+        <section >
+            <a href="" @click.prevent="getChildren(user.Id)">Показать детей</a>
 
-                <relative-user v-if="isShowChildren" :userProp="userChildren"></relative-user>
+            <relative-user v-if="isShowChildren" 
+                title="Дети" 
+                :userProp="userChildren"></relative-user>
 
-                <button type="button" v-show="isEditMode" @click="addChild">Добавить ребенка</button>
-            </div>
+            <button type="button" v-show="isEditMode" @click="addChild">Добавить ребенка</button>
+        </section>
 
-            <div>
-                <a href="" @click.prevent="getParents(user.Id)">Родители</a>
+        <section>
+            <a href="" @click.prevent="getParents(user.Id)">Показать родителей</a>
 
-                <relative-user v-if="isShowParents" :userProp="userParents"></relative-user>
+            <relative-user v-if="isShowParents" 
+                title="Родители" 
+                :userProp="userParents"></relative-user>
 
-                <button type="button" v-show="isEditMode" @click="addParent">Добавить родителя</button>
-            </div>
-
-            <Modal v-if="isShowModalForm">
-                <template v-slot:modal-header>
-                    <h1>Здесь мог быть заголовок страницы</h1>
-                </template>
-                 <template v-slot:modal-main>
-                    <h1>Здесь мог быть заголовок страницы</h1>
-                </template>
-                 <template v-slot:modal-footer>
-                    <h1>Здесь мог быть заголовок страницы</h1>
-                </template>
-            </Modal>
+            <button type="button" v-show="isEditMode" :disabled="isHaveParents" @click="addParent">Добавить родителя</button>
         </section>
              
+        <Modal type="Добавить родителя"
+            v-if="isShowModalForm"
+            @closeModal="isShowModalForm = false"
+            @addParent="addSelectedParent($event, value)">
+        </Modal>
     </article>
 </template>
 
@@ -153,13 +150,19 @@
 
         components: {
             RelativeUser,
-            Modal,
+            Modal
         },
 
         props: {
             propsUser: {
                 type: Object,
                 default: () => {}
+            }
+        },
+
+        computed: {
+            isHaveParents: function () {
+                return this.userParents.length >= 2;
             }
         },
 
@@ -207,7 +210,7 @@
                     .then(children => {
                         console.log(children)
                         if (Array.isArray(children)) {
-                            this.userChildren = this.userChildren.concat(children);
+                            this.userChildren = Object.assign([], children);
                             this.isShowChildren = true;
                         }
                     })
@@ -219,7 +222,7 @@
                     .then(parents => {
                          console.log(parents)
                          if (Array.isArray(parents)) {
-                            this.userParents = this.userParents.concat(parents);
+                            this.userParents = Object.assign([], parents);
                             this.isShowParents = true;
                         }
                     })
@@ -227,11 +230,16 @@
 
             addChild() {
                 console.log('--add child--')
-                this.isOpenModalForm = true;
+                this.isShowModalForm = true;
             },
             addParent() {
                 console.log('--add parent--')
+                this.isShowModalForm = true;
             },
+            addSelectedParent() {
+               
+            },
+
             validateUser() {
                 return true;
             },

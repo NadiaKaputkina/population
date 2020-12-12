@@ -1,10 +1,12 @@
 <template>
     <table>
+        <caption>{{title}}</caption>
         <thead>
             <tr>
                 <th>Имя</th>
                 <th>Фамилия</th>
                 <th>Пол</th>
+                <th>Дата рождения</th>
                 <th>Личный номер</th>
             </tr>
         </thead>
@@ -13,6 +15,7 @@
                 <td>{{user.FirstName}}</td>
                 <td>{{user.LastName}}</td>
                 <td>{{user.SexId}}</td>
+                <td>{{user.DateOfBirth}}</td>
                 <td>{{user.IdentificationNumber}}</td>
             </tr>
         </tbody>
@@ -24,6 +27,10 @@ export default {
     name: 'RelativeUser',
 
     props: {
+        title: {
+            type: String,
+            default: ''
+        },
         userProp: {
             type: Array | Object,
             default: () => []

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="wrap">
         <filters @get-filtered-data="getFilteredData"></filters>
         <table>
             <thead>

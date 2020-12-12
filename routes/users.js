@@ -62,7 +62,7 @@ router.get('/:id/get-child', async function(req, res, next) {
     res.status(200).send({title:'Нет детей'})
   } else {
     await Users.findAll({
-      attributes: ['FirstName', 'LastName', 'SexId', 'IdentificationNumber'],
+      attributes: ['FirstName', 'LastName', 'SexId', 'DateOfBirth', 'IdentificationNumber'],
       where: {
         Id: {
           [Op.or]: childIds
@@ -94,7 +94,7 @@ router.get('/:id/get-parents', async function(req, res, next) {
     res.status(200).send({title: 'Нет родителей'})
   } else {
     await Users.findAll({
-      attributes: ['FirstName', 'LastName', 'SexId', 'IdentificationNumber'],
+      attributes: ['FirstName', 'LastName', 'SexId', 'DateOfBirth', 'IdentificationNumber'],
       where: {
         Id: {
           [Op.or]: parentIds
@@ -105,6 +105,19 @@ router.get('/:id/get-parents', async function(req, res, next) {
       .catch(error => res.status(500).send(error) )
   }
 
+});
+
+router.post('/get-user-by-identification-number', function(req, res, next) {
+  const { IdentificationNumber } = req.body;
+  console.log(IdentificationNumber)
+  
+  Users.findOne({
+      where: {
+          IdentificationNumber: IdentificationNumber
+      }
+  })
+  .then(user => res.status(200).send({ user }))
+  .catch(error => res.status(500).send(error) )
 });
 
 router.get('/new', function(req, res, next) {

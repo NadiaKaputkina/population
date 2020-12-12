@@ -12,12 +12,10 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-div#app {
-  margin: 20px 50px;
-}
-
 table {
   border-collapse: collapse;
+}
+.wrap > table {
   margin: 20px auto;
 }
 
@@ -41,14 +39,24 @@ article.showUser {
 }
 
 article.showUser > section {
-  display: flex;
-  flex-direction: row;
   padding: 5px;
   margin: 5px 0;
 }
 
 
 .modal {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   z-index: 1;
-  
+  background-color: rgba(0,0,0,0.5);
+}
+.modal-dialog {
+  width: 500px;
+  height: auto;
+  padding: 20px;
+  background-color: white;
 }

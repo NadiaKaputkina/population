@@ -12,11 +12,7 @@ router.get('/get-filters', async function(req, res, next) {
     res.status(200).send({ sexes, maritalStatuses })
 });
 
-// router.get('/get-sexes', function(req, res, next) {
-//     Sexes.findAll()
-//     .then(sexes => res.status(200).send({ sexes }))
-    
-// });
+
 
 // router.get('/get-sexes', function(req, res, next) {
 //     Sexes.findAll()
