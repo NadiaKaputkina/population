@@ -21,8 +21,8 @@
                     <td>{{ user.FirstName }}</td>
                     <td>{{ user.LastName }}</td>
                     <td>{{ user.DateOfBirth }}</td>
-                    <td>{{ user.SexId }}</td>
-                    <td>{{ user.MaritalStatusId }}</td>
+                    <td>{{ userSexText(user) }}</td>
+                    <td>{{ maritalStatusText(user) }}</td>
                     <td>{{ user.IdentificationNumber }}</td>
                     <td>{{ user.DateOfDeath }}</td>
                 </tr>
@@ -53,6 +53,20 @@
         data() {
             return {
                users: null
+            }
+        },
+
+        computed: {
+            userSexText: () => {
+                return (user) => {
+                    return user.Sex.ShortTitle;
+                }
+            },
+
+            maritalStatusText: () => {
+                return (user) => {
+                    return user.MaritalStatus.Status;
+                }
             }
         },
 

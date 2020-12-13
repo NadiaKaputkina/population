@@ -1,4 +1,6 @@
-const { sequelize, DataTypes } = require('./index')
+const { sequelize, DataTypes } = require('./index');
+const Sexes = require('./sexes');
+const MaritalStatuses = require('./marital_statuses');
 
 const Users = sequelize.define('User', {
     Id: {
@@ -30,6 +32,14 @@ const Users = sequelize.define('User', {
     }
 }, {
     tableName: 'persons'
+});
+
+Users.belongsTo(Sexes, {
+    foreignKey: 'SexId'
+});
+
+Users.belongsTo(MaritalStatuses, {
+    foreignKey: 'MaritalStatusId'
 })
 
 module.exports = Users;

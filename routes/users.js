@@ -6,15 +6,12 @@ const { Op } = require('sequelize');
 const Users = require('../models/users');
 const Sexes = require('../models/sexes');
 const Children = require('../models/children');
+const MaritalStatuses = require('../models/marital_statuses');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  Users.belongsTo(Sexes, {
-    foreignKey: 'SexId'
-  })
-
   Users.findAll({
-    include: [Sexes],
+    include: [Sexes, MaritalStatuses],
     order: ['Id']
   })
     .then(users => res.render('users', { users }) )
@@ -59,7 +56,7 @@ router.get('/:id/get-child', async function(req, res, next) {
   .catch(error => res.status(500).send(error) )
 
   if (!childIds.length) {
-    res.status(200).send({title:'Нет детей'})
+    res.status(200).send({text:'Дети не найдены'})
   } else {
     await Users.findAll({
       attributes: ['FirstName', 'LastName', 'SexId', 'DateOfBirth', 'IdentificationNumber'],
@@ -91,7 +88,7 @@ router.get('/:id/get-parents', async function(req, res, next) {
   .catch(error => res.status(500).send(error) )
 
   if (!parentIds.length) {
-    res.status(200).send({title: 'Нет родителей'})
+    res.status(200).send({text: 'Родители не найдены'})
   } else {
     await Users.findAll({
       attributes: ['FirstName', 'LastName', 'SexId', 'DateOfBirth', 'IdentificationNumber'],
@@ -127,7 +124,7 @@ router.get('/new', function(req, res, next) {
 router.post('/save', async function(req, res, next) {
   const { Id, ...userParams } = req.body;
   let userId = Id;
-
+  console.log(userParams)
   if (Id) {
     console.log('--- update ---')
     await Users.update(userParams, {
@@ -140,7 +137,15 @@ router.post('/save', async function(req, res, next) {
     const newUser = await Users.create(userParams);
     userId = newUser.Id;
   }
- 
+
+  console.log(userParams.parentsIds)
+  if (userParams.parentsIds.length) {
+    Children.create({
+      ChildId: userId,
+      ParentId: userParams.parentsIds
+    })
+  }
+
   Users.findByPk(userId)
   .then(user =>  res.status(200).send(user) )
   .catch(error => res.status(500).send(error) )

@@ -18,7 +18,7 @@
                     <span>{{user.SexId}}</span>
                     <span>{{user.IdentificationNumber}}</span>
                 </p>
-                <p v-else>Не найден</p>
+                <p v-else>{{userNotFoundText}}</p>
             </main>
             <footer class="modal-footer">
                 <button type="button" @click="onCancel">Отмена</button>
@@ -42,6 +42,7 @@
 
                 user: {},
                 isUserFound: false,
+                userNotFoundText: '',
             }
         },
         computed: {
@@ -55,7 +56,7 @@
                 this.$emit('closeModal')
             },
             onAddParent() {
-                this.$emit('addParent', value)
+                this.$emit('addParent', this.user)
             },
             searchUserByIdentificationNumber() {
                  fetch('/users/get-user-by-identification-number', {

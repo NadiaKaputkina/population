@@ -1,5 +1,5 @@
 <template>
-    <article class="showUser">
+    <div class="wrap">
         <nav>
             <a href="/users">Список</a>
 
@@ -13,11 +13,12 @@
                 <button type="button" 
                     @click="onSave">Save</button>
                 <button type="button"
-                    @click="onDelete">Delete</button>
+                    @click="onClickDelete">Delete</button>
             </template>
         </nav>
 
-        <section class="name">
+        <fieldset>
+            <legend>Имя:</legend>
             <label>
                 Имя
                 <input type="text" :readonly="!isEditMode" v-model="user.FirstName"/>
@@ -38,9 +39,10 @@
                     </option>
                 </select>
             </label>
-        </section>
+        </fieldset>
 
-        <section>
+        <fieldset>
+            <legend>Рождение:</legend>
             <label>
                 Дата рождения
                 <input type="date" :readonly="!isEditMode" v-model="user.DateOfBirth"/>
@@ -50,9 +52,19 @@
                 Место рождения
                 <input type="text" :readonly="!isEditMode" />
             </label>
-        </section>
 
-        <section>
+            <a href="" @click.prevent="getParents(user.Id)">Показать родителей</a>
+
+            <relative-user v-if="isShowParentsTable" 
+                title="Родители" 
+                :userProp="userParents"></relative-user>
+            <p v-else>{{userParentsNotFoundText}}</p>
+
+            <button type="button" v-show="isEditMode" :disabled="isHaveParents" @click="addParent">Добавить родителя</button>
+        </fieldset>
+
+        <fieldset disabled="false">
+            <legend>Смерть:</legend>
             <label>
                  Дата смерти
                 <input type="date" :readonly="!isEditMode" v-model="user.DateOfDeath"/>
@@ -62,9 +74,10 @@
                 Место смерти
                 <input type="text" :readonly="!isEditMode" />
             </label>
-        </section>
+        </fieldset>
 
-        <section>
+        <fieldset>
+            <legend>Документы:</legend>
             <label>
                 Личный номер
                 <input type="text" :readonly="!isEditMode" v-model="user.IdentificationNumber"/>
@@ -72,17 +85,20 @@
 
             <label>
                 Документ
-                <!-- <select :disabled="!isEditMode" v-model="user.SexId">
-                        <option v-for="sex of sexes" 
-                                :key="sex.Id" 
-                                :value="sex.Id">
-                            {{sex.Title}}
-                        </option>
-                    </select> -->
+                <select :disabled="!isEditMode" v-model="user.documentId">
+                    <!-- <option v-for="sex of sexes" 
+                            :key="sex.Id" 
+                            :value="sex.Id">
+                        {{sex.Title}}
+                    </option> -->
+                    <option value="1">Паспорт</option>
+                    <option value="2">Вид на жительство</option>
+                    <option value="3">Другое</option>
+                </select>
             </label>
 
             <label>
-                Номер {{}}
+                Номер
                 <input type="text" :readonly="!isEditMode"/>
             </label>
 
@@ -98,9 +114,10 @@
                 Срок действия
                 <input type="date" :readonly="!isEditMode"/>
             </label>
-        </section>
+        </fieldset>
 
-        <section>
+        <fieldset>
+            <legend>Семейное положение:</legend>
             <label>
                 Семейное положение
                 <select :disabled="!isEditMode" v-model="user.MaritalStatusId">
@@ -111,46 +128,53 @@
                     </option>
                 </select>
             </label>
-        </section>
-
-        <section >
+        
             <a href="" @click.prevent="getChildren(user.Id)">Показать детей</a>
 
-            <relative-user v-if="isShowChildren" 
+            <relative-user v-if="isShowChildrenTable" 
                 title="Дети" 
                 :userProp="userChildren"></relative-user>
+            <p v-else>{{userChildrenNotFoundText}}</p>
 
             <button type="button" v-show="isEditMode" @click="addChild">Добавить ребенка</button>
-        </section>
+        </fieldset>
 
-        <section>
-            <a href="" @click.prevent="getParents(user.Id)">Показать родителей</a>
-
-            <relative-user v-if="isShowParents" 
-                title="Родители" 
-                :userProp="userParents"></relative-user>
-
-            <button type="button" v-show="isEditMode" :disabled="isHaveParents" @click="addParent">Добавить родителя</button>
-        </section>
              
         <Modal type="Добавить родителя"
             v-if="isShowModalForm"
             @closeModal="isShowModalForm = false"
-            @addParent="addSelectedParent($event, value)">
+            @addParent="addSelectedParent($event)">
         </Modal>
-    </article>
+
+        <ModalDialog
+            v-if="isShowModalDialog"
+            @closeModal="isShowModalDialog = false">
+            <template v-slot:modal-header>
+                Внимание!
+            </template>
+             <template v-slot:modal-main>
+                Вы действительно хотите удалить запись?
+            </template>
+             <template v-slot:modal-footer>
+                <button type="button" @click="isShowModalDialog = false">Отмена</button>
+                <button type="button" @click="onDelete">Удалить</button>
+            </template>
+        </ModalDialog>
+    </div>
 </template>
 
 <script>
     import RelativeUser from './RelativeUser.vue';
     import Modal from './Modal.vue';
+    import ModalDialog from './ModalDialog.vue';
 
     export default {
         name: 'ViewUser',
 
         components: {
             RelativeUser,
-            Modal
+            Modal,
+            ModalDialog
         },
 
         props: {
@@ -165,21 +189,24 @@
                 return this.userParents.length >= 2;
             }
         },
-
+ 
         data() {
             return {
-                isEditMode: false,
-                isShowChildren: false,
-                isShowParents: false,
-
                 user: {},
+
+                isShowChildrenTable: false,
+                isShowParentsTable: false,
                 userChildren: [],
                 userParents: [],
+                userChildrenNotFoundText: '',
+                userParentsNotFoundText: '',
 
+                isEditMode: false,
                 sexes: [],
                 maritalStatuses: [],
 
                 isShowModalForm: false,
+                isShowModalDialog: false,
             }
         },
 
@@ -208,10 +235,11 @@
                 fetch(`/users/${this.user.Id}/get-child`)
                     .then(response => response.json())
                     .then(children => {
-                        console.log(children)
                         if (Array.isArray(children)) {
                             this.userChildren = Object.assign([], children);
-                            this.isShowChildren = true;
+                            this.isShowChildrenTable = true;
+                        } else {
+                             this.userChildrenNotFoundText = children.text
                         }
                     })
             },
@@ -220,10 +248,11 @@
                 fetch(`/users/${this.user.Id}/get-parents`)
                     .then(response => response.json())
                     .then(parents => {
-                         console.log(parents)
                          if (Array.isArray(parents)) {
                             this.userParents = Object.assign([], parents);
-                            this.isShowParents = true;
+                            this.isShowParentsTable = true;
+                        } else {
+                            this.userParentsNotFoundText = parents.text
                         }
                     })
             },
@@ -236,8 +265,16 @@
                 console.log('--add parent--')
                 this.isShowModalForm = true;
             },
-            addSelectedParent() {
-               
+            addSelectedParent(parent) {
+                this.userParents.push(parent);
+
+                if (!this.user.parentsIds) {
+                    this.user.parentsIds = [];
+                }
+                this.user.parentsIds.push(parent.Id);
+
+                this.isShowModalForm = false;
+                this.isShowParentsTable = true;
             },
 
             validateUser() {
@@ -262,16 +299,21 @@
                 })
                 .then(response => response.json())
                 .then(user => {
-                    console.log(user)
                     this.isEditMode = false;
-                    this.user = Object.assign({}, user)
+                    this.user = Object.assign({}, user);
                 })
                 .catch((error) => {
                     console.log(error)
                 })
             },
 
-             onDelete() {
+            onClickDelete() {
+                this.isShowModalDialog = true;
+            },
+
+            onDelete() {
+                this.isShowModalDialog = false;
+
                 fetch(`/users/${this.user.Id}/delete`, {
                     method: 'DELETE'
                 })
