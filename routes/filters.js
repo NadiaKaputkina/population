@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-const Sexes = require('../models/sexes');
-const MaritalStatuses = require('../models/marital_statuses');
+const Sexes = require('../models').Sexes;
+const MaritalStatuses = require('../models').MaritalStatuses;
 
 /* GET home page. */
 router.get('/get-filters', async function(req, res, next) {

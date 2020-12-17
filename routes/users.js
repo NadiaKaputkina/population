@@ -2,11 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 const { Op } = require('sequelize');
+const upload = require('./middleware/upload');
+const { uploadFiles } = require('../controllers/upload');
 
-const Users = require('../models/users');
-const Sexes = require('../models/sexes');
-const Children = require('../models/children');
-const MaritalStatuses = require('../models/marital_statuses');
+const Users = require('../models').Users;
+const Sexes = require('../models').Sexes;
+const Children = require('../models').Children;
+const MaritalStatuses = require('../models').MaritalStatuses;
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -104,16 +106,34 @@ router.get('/:id/get-parents', async function(req, res, next) {
 
 });
 
-router.post('/get-user-by-identification-number', function(req, res, next) {
-  const { IdentificationNumber } = req.body;
-  console.log(IdentificationNumber)
+router.post('/get-user-by-search-params', function(req, res, next) {
+  const { DateOfBirthCurrentUser, IdentificationNumber, LastName } = req.body;
   
-  Users.findOne({
+  let date = new Date(DateOfBirthCurrentUser);
+  let year = date.getFullYear() - 10;
+  date.setFullYear(year);
+
+  console.log(DateOfBirthCurrentUser, date);
+
+  Users.findAll({
+      include: [Sexes],
       where: {
-          IdentificationNumber: IdentificationNumber
+          IdentificationNumber: {
+            [Op.like]: `${IdentificationNumber}%`
+          },
+          LastName: {
+            [Op.like]: `${LastName}%`
+          },
+          DateOfBirth: {
+            [Op.lte]: date
+          }
       }
   })
-  .then(user => res.status(200).send({ user }))
+  .then(users => {
+    return users.length > 0 ? 
+      res.status(200).send(users) :
+      res.status(200).send({text: 'Не найдено'})
+    })
   .catch(error => res.status(500).send(error) )
 });
 
@@ -121,10 +141,12 @@ router.get('/new', function(req, res, next) {
   res.render('user', {})
 });
 
-router.post('/save', async function(req, res, next) {
+router.post('/save', upload.single('file'), async function(req, res, next) {
   const { Id, ...userParams } = req.body;
+
+  await uploadFiles(req, res);
+
   let userId = Id;
-  console.log(userParams)
   if (Id) {
     console.log('--- update ---')
     await Users.update(userParams, {
@@ -139,7 +161,7 @@ router.post('/save', async function(req, res, next) {
   }
 
   console.log(userParams.parentsIds)
-  if (userParams.parentsIds.length) {
+  if (Array.isArray(userParams.parentsIds)) {
     Children.create({
       ChildId: userId,
       ParentId: userParams.parentsIds

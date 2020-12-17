@@ -19,7 +19,14 @@ table {
   height: 100%;
 }
 .wrap > *:not(.modal) {
-  margin: 20px;
+  margin: 10px 30px;
+}
+.wrap > .name-wrap {
+  display: flex;
+  flex-direction: row;
+}
+.wrap > .name-wrap > div:first-child {
+  flex: auto;
 }
 
 table th,
@@ -36,6 +43,13 @@ table tbody tr:hover {
   color: white;
 }
 
+ul {
+  padding: 0;
+}
+ul > li {
+  list-style-type: none;
+  padding: 5px 0;
+}
 
 .modal {
   position: absolute;

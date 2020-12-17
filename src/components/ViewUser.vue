@@ -17,9 +17,15 @@
             </template>
         </nav>
 
-        <fieldset>
-            <legend>Имя:</legend>
-            <label>
+        <fieldset class="name-wrap">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <img :src="base64Img" width="200" height="300"/> 
+                <input type="file" id="photo" @change="onChangeFileUpload" accept="image/*" :disabled="!isEditMode"/>
+
+                <button type="submit">Загрузить</button>
+            </form>
+            <div>
+            <label> 
                 Имя
                 <input type="text" :readonly="!isEditMode" v-model="user.FirstName"/>
             </label>
@@ -39,6 +45,7 @@
                     </option>
                 </select>
             </label>
+            </div>
         </fieldset>
 
         <fieldset>
@@ -138,10 +145,10 @@
 
             <button type="button" v-show="isEditMode" @click="addChild">Добавить ребенка</button>
         </fieldset>
-
-             
+   
         <Modal type="Добавить родителя"
             v-if="isShowModalForm"
+            :DateOfBirthCurrentUser="user.DateOfBirth"
             @closeModal="isShowModalForm = false"
             @addParent="addSelectedParent($event)">
         </Modal>
@@ -152,12 +159,19 @@
             <template v-slot:modal-header>
                 Внимание!
             </template>
-             <template v-slot:modal-main>
+            <template v-slot:modal-main>
                 Вы действительно хотите удалить запись?
             </template>
              <template v-slot:modal-footer>
                 <button type="button" @click="isShowModalDialog = false">Отмена</button>
                 <button type="button" @click="onDelete">Удалить</button>
+            </template>
+        </ModalDialog>
+
+        <ModalDialog v-if="isSuccess"
+            @closeModal="isSuccess = false">
+            <template v-slot:modal-main>
+                Сохранено
             </template>
         </ModalDialog>
     </div>
@@ -207,6 +221,11 @@
 
                 isShowModalForm: false,
                 isShowModalDialog: false,
+
+                isSuccess: false,
+
+                photo: null,
+                base64Img: null,
             }
         },
 
@@ -281,6 +300,21 @@
                 return true;
             },
 
+            onChangeFileUpload(event) {
+                this.photo = event.target.files[0];
+                this.encodeImage(this.photo)
+            },
+
+            encodeImage(input) {
+                if (input) {
+                    const reader = new FileReader()
+                    reader.onload = (e) => {
+                        this.base64Img = e.target.result
+                    }
+                    reader.readAsDataURL(input)
+                }
+            },
+
             onCancel() {
                 this.user = Object.assign({}, this.propsUser)
 
@@ -301,6 +335,11 @@
                 .then(user => {
                     this.isEditMode = false;
                     this.user = Object.assign({}, user);
+                    this.isSuccess = true;
+
+                    setTimeout(() => {
+                        this.isSuccess = false;
+                    }, 2000)
                 })
                 .catch((error) => {
                     console.log(error)

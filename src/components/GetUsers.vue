@@ -76,8 +76,6 @@
 
         methods: {
             getFilteredData(data) {
-                console.log('getFilteredData', data)
-                
                 fetch('/users/get-filtered-users', {
                     method: 'POST', 
                     body: JSON.stringify(data),
