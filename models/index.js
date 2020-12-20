@@ -17,6 +17,7 @@ db.Sexes = require('./sexes.model')(sequelize, Sequelize);
 db.MaritalStatuses = require('./marital_statuses.model')(sequelize, Sequelize);
 db.Children = require('./children.model')(sequelize, Sequelize);
 db.Image = require('./image.model')(sequelize, Sequelize);
+db.Accounts = require('./accounts.model')(sequelize, Sequelize);
 
 Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {

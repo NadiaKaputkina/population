@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Image = sequelize.define('Image', {
         Id: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
@@ -16,13 +16,24 @@ module.exports = (sequelize, DataTypes) => {
         },
         Data: {
             type: DataTypes.BLOB("long"),
+        },
+        UserId: {
+            type: DataTypes.INTEGER,
         }
     }, {
         tableName: 'images'
     });
 
     Image.associate = function(models) {
+        Image.belongsTo(models.Users, { foreignKey: 'UserId' });
     };
     
+    Image.getPhotoByUserId = async function (id) {
+        return await Image.findOne({
+            where: { 
+                UserId: id
+            }
+        }).then(data => data)
+    }
     return Image;
 }

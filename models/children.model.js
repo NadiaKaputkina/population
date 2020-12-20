@@ -1,15 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
     const Children = sequelize.define('Children', {
         Id: {
-            type: DataTypes.NUMBER,
-            unique: true,
-            primaryKey: true
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
         },
         ParentId: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
         },
         ChildId: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.INTEGER,
         },
         ParentFromDate: {
             type: DataTypes.DATEONLY,
@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Children.associate = function(models) {
+        
     };
     
     return Children;

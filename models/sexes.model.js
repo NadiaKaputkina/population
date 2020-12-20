@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const Sexes = sequelize.define('Sex', {
         Id: {
-            type: DataTypes.NUMBER,
-            unique: true,
-            primaryKey: true
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
         },
         Title: {
             type: DataTypes.STRING,

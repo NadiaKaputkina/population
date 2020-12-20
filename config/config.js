@@ -15,6 +15,8 @@ module.exports = {
             "min": process.env.POOL_MIN,
             "acquire": process.env.POOL_ACQUIRE,
             "idle": process.env.POOL_IDLE
-        }
-    }
+        },
+        "jwt_secret": process.env.JWT_SECRET,
+    },
+    publicPath: path.resolve(__dirname, '../public'),
 }

@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const MaritalStatuses = sequelize.define('MaritalStatuses', {
         Id: {
-            type: DataTypes.NUMBER,
-            unique: true,
-            primaryKey: true
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
         },
         Status: {
             type: DataTypes.STRING,

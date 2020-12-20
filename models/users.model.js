@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {  
     const Users = sequelize.define('User', {
         Id: {
-            type: DataTypes.NUMBER,
-            unique: true,
-            primaryKey: true
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
         },
         FirstName: {
             type: DataTypes.STRING,
@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
             unique: true
         },
         SexId: { 
-            type: DataTypes.NUMBER
+            type: DataTypes.INTEGER
         },
         MaritalStatusId: {
-            type: DataTypes.NUMBER
+            type: DataTypes.INTEGER
         },
         DateOfDeath: {
             type: DataTypes.DATEONLY,
@@ -36,5 +36,9 @@ module.exports = (sequelize, DataTypes) => {
         Users.belongsTo(models.MaritalStatuses, { foreignKey: 'MaritalStatusId'})
     }
     
+    Users.getUserById = async function (id) {
+        return await Users.findByPk(id).then(user => user)
+    };
+
     return Users;
 };

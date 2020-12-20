@@ -9,6 +9,7 @@ const Users = require('../models').Users;
 const Sexes = require('../models').Sexes;
 const Children = require('../models').Children;
 const MaritalStatuses = require('../models').MaritalStatuses;
+const Image = require('../models').Image;
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -22,7 +23,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/get-filtered-users', function(req, res, next) {
   const searchParams = req.body;
-console.log(searchParams)
+
   Users.findAll({
     where: {
       SexId: searchParams.sexId
@@ -36,9 +37,23 @@ console.log(searchParams)
 router.get('/:id', function(req, res, next) {
   const userId = req.params.id;
 
-  Users.findByPk(userId)
+  Users.getUserById(userId)
     .then(user =>  res.render('user', { user }) )
     .catch(error => res.render('error', { error }) )
+});
+
+router.post('/get-photo-by-user', function(req, res, next) {
+  const { UserId } = req.body;
+
+  Image.getPhotoByUserId(UserId)
+    .then(photo =>  {
+        const img = {
+          Path: `/images/${photo.Name}`,
+          Title: photo.Title
+      }
+      return res.status(200).send(img) 
+    })
+    .catch(error => res.send(error) )
 });
 
 router.get('/:id/get-child', async function(req, res, next) {
@@ -113,8 +128,6 @@ router.post('/get-user-by-search-params', function(req, res, next) {
   let year = date.getFullYear() - 10;
   date.setFullYear(year);
 
-  console.log(DateOfBirthCurrentUser, date);
-
   Users.findAll({
       include: [Sexes],
       where: {
@@ -141,10 +154,8 @@ router.get('/new', function(req, res, next) {
   res.render('user', {})
 });
 
-router.post('/save', upload.single('file'), async function(req, res, next) {
+router.post('/save', async function(req, res, next) {
   const { Id, ...userParams } = req.body;
-
-  await uploadFiles(req, res);
 
   let userId = Id;
   if (Id) {
@@ -160,7 +171,6 @@ router.post('/save', upload.single('file'), async function(req, res, next) {
     userId = newUser.Id;
   }
 
-  console.log(userParams.parentsIds)
   if (Array.isArray(userParams.parentsIds)) {
     Children.create({
       ChildId: userId,
@@ -173,6 +183,8 @@ router.post('/save', upload.single('file'), async function(req, res, next) {
   .catch(error => res.status(500).send(error) )
   
 });
+
+router.post('/upload', upload.single('Photo'), uploadFiles);
 
 router.delete('/:id/delete', async function(req, res, next) {
   const userId = req.params.id;

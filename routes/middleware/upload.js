@@ -1,4 +1,5 @@
 const multer = require('multer');
+const publicPath = require('../../config/config')['publicPath'];
 
 const imageFilter = (req, file, cb) => {
     if (file.mimetype.startsWith("image")) {
@@ -10,7 +11,7 @@ const imageFilter = (req, file, cb) => {
 
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, __dirname + '/public/images/');
+        cb(null, `${publicPath}/images/`);
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname)

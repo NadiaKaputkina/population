@@ -18,12 +18,10 @@
         </nav>
 
         <fieldset class="name-wrap">
-            <form action="/upload" method="POST" enctype="multipart/form-data">
-                <img :src="base64Img" width="200" height="300"/> 
-                <input type="file" id="photo" @change="onChangeFileUpload" accept="image/*" :disabled="!isEditMode"/>
-
-                <button type="submit">Загрузить</button>
-            </form>
+            <div>
+                <img :src="photoURL" :title="photoTitle" width="200" height="auto"/> 
+                <input type="file" id="photo" name="photo" @change="onChangeFileUpload" accept="image/*" :disabled="!isEditMode"/>
+            </div>
             <div>
             <label> 
                 Имя
@@ -197,12 +195,6 @@
                 default: () => {}
             }
         },
-
-        computed: {
-            isHaveParents: function () {
-                return this.userParents.length >= 2;
-            }
-        },
  
         data() {
             return {
@@ -225,18 +217,32 @@
                 isSuccess: false,
 
                 photo: null,
+
+                file: null,
                 base64Img: null,
             }
         },
 
         mounted() {
             console.log('mounted')
-            this.getData()
-
             if (this.propsUser) {
                 this.user = Object.assign({}, this.propsUser)
             } else {
                 this.isEditMode = true
+            }
+            this.getData();
+            this.getPhotoByUser();
+        },
+
+        computed: {
+            isHaveParents: function () {
+                return this.userParents.length >= 2;
+            },
+            photoTitle: function() {
+                return this.photo ? this.photo.Title : '';
+            },
+            photoURL: function() {
+                return this.photo ? this.photo.Path : this.base64Img;
             }
         },
 
@@ -248,6 +254,24 @@
                         this.sexes = Object.assign([], data.sexes);
                         this.maritalStatuses = Object.assign([], data.maritalStatuses);
                     })
+                    .catch(error => console.log(error))
+            },
+
+            getPhotoByUser() {
+                const UserId = this.user.Id;
+
+                fetch('/users/get-photo-by-user', {
+                    method: 'POST',
+                    body: JSON.stringify({ UserId: UserId }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        this.photo = Object.keys(data).length ? Object.assign({}, data) : null;
+                    })
+                    .catch(error => console.log(error))
             },
 
             getChildren(userId) {
@@ -301,8 +325,8 @@
             },
 
             onChangeFileUpload(event) {
-                this.photo = event.target.files[0];
-                this.encodeImage(this.photo)
+                this.file = event.target.files[0];
+                this.encodeImage(this.file)
             },
 
             encodeImage(input) {
@@ -323,7 +347,7 @@
 
             onSave() {
                 if (!this.validateUser()) return;
-
+            
                 fetch('/users/save', {
                     method: 'POST', 
                     body: JSON.stringify(this.user),
@@ -331,8 +355,10 @@
                         'Content-Type': 'application/json'
                     }
                 })
-                .then(response => response.json())
-                .then(user => {
+                .then(response => {
+                    if (response.ok) this.onSavePhoto();
+                    return response.json()
+                }).then(user => {
                     this.isEditMode = false;
                     this.user = Object.assign({}, user);
                     this.isSuccess = true;
@@ -344,6 +370,25 @@
                 .catch((error) => {
                     console.log(error)
                 })
+            },
+            
+            onSavePhoto() {
+                if (this.file) { 
+                    let formData = new FormData();
+                    formData.append('Photo', this.file);
+                    formData.append('Title', `${this.user.LastName} ${this.user.FirstName}`);
+                    formData.append('UserId', this.user.Id)
+
+                    fetch('/users/upload', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        this.photo = Object.keys(data).length ? Object.assign({}, data) : null;
+                    })
+                    .catch(error => console.log(error))
+                }
             },
 
             onClickDelete() {
