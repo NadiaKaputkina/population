@@ -4,6 +4,8 @@ var router = express.Router();
 const { Op } = require('sequelize');
 const upload = require('./middleware/upload');
 const { uploadFiles } = require('../controllers/upload');
+const auth = require('./middleware/auth');
+const permissions = require('./middleware/permissions');
 
 const Users = require('../models').Users;
 const Sexes = require('../models').Sexes;
@@ -12,12 +14,15 @@ const MaritalStatuses = require('../models').MaritalStatuses;
 const Image = require('../models').Image;
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', auth, permissions, function(req, res, next) {
+  const { FirstName, LastName } = req.params.accountData;
+ console.log(req.params.accountData)
+
   Users.findAll({
     include: [Sexes, MaritalStatuses],
     order: ['Id']
   })
-    .then(users => res.render('users', { users }) )
+    .then(users => res.render('users', { users, FirstName, LastName }) )
     .catch(error => res.render('error', { error }) )
 });
 

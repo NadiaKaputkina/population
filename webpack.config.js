@@ -1,5 +1,6 @@
 const path = require('path')
-const { VueLoaderPlugin } = require('vue-loader')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { VueLoaderPlugin  } =require('vue-loader')
 
 module.exports = {
     entry: {
@@ -7,7 +8,7 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, '/public/javascripts'),
+        path: path.resolve(__dirname, 'public/javascripts'),
         publicPath: '/javascripts'
     },
     module: {
@@ -19,10 +20,11 @@ module.exports = {
             test: /\.vue$/,
             loader: 'vue-loader'
         }, {
-            test: /\.css$/,
+            test: /\.scss$/,
             use: [
-                'vue-style-loader',
-                'css-loader'
+                MiniCssExtractPlugin.loader,
+                'css-loader',
+                'sass-loader'
             ]
         }]
     },
@@ -36,6 +38,7 @@ module.exports = {
         open: true
     },
     plugins: [
-        new VueLoaderPlugin
+        new VueLoaderPlugin,
+        new MiniCssExtractPlugin({filename: 'style.css'})
     ]
 }

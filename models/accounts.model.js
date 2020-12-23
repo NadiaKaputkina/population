@@ -46,5 +46,10 @@ module.exports = (sequelize, DataTypes) => {
         return Accounts.roles.get(roleId);
     };
 
+    Accounts.comparePassword = function (password, hash, cb) {
+        if (password !== hash) return false;
+        return true;
+    }
+    
     return Accounts;
 }

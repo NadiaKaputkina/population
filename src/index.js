@@ -2,7 +2,7 @@ import './scss/index.scss';
 
 window.Vue = require('vue');
 
-Vue.component('login', require('./components/Login.vue').default);
+Vue.component('login-page', require('./components/LoginPage.vue').default);
 
 Vue.component('modal', require('./components/Modal.vue').default);
 Vue.component('modal-dialog', require('./components/ModalDialog.vue').default);

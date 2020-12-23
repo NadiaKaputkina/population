@@ -1,18 +1,20 @@
 <template>
-    <form>
+    <form action="/login" method="POST">
         <label for="email">Email</label>
-        <input type="text" id="email" v-model="email" placeholder="Email"/>
+        <input type="text" id="email" name="email" v-model.trim="email" placeholder="Email"/>
 
         <label for="password">Пароль</label>
-        <input type="password" id="password" v-model="password" placeholder="Пароль"/>
+        <input type="password" id="password" name="password" v-model.trim="password" placeholder="Пароль"/>
 
-        <button type="submit" @click.prevent="onLogIn">Войти</button>
+        <button type="submit">Войти</button>
+
+        <p></p>
     </form>
 </template>
 
 <script>
     export default {
-        name: 'Login',
+        name: 'LoginPage',
 
         data() {
             return {
@@ -35,8 +37,7 @@
                         'Content-Type': 'application/json'
                     }
                 })
-                .then(response => response.json())
-                .then(data => console.log(data))
+                .then((res) => console.log(res))
                 .catch(err => console.log(err))
             }
         }

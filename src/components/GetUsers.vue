@@ -29,7 +29,7 @@
             </tbody>
         </table>
 
-        <button type="button" @click="createNewUser">Добавить</button>
+        <button type="button" class="btn" @click="createNewUser">Добавить</button>
     </div>
 </template>
 
