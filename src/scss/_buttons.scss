@@ -1,3 +1,18 @@
+%btn {
+    padding: $btn-padding;
+    background-color: $brand-primary;
+    color: $white;
+    border-color: transparent;
+    border-radius: $btn-radius;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
 .btn {
-    background-color: aquamarine;
+    @extend %btn;
+}
+
+.btn:hover {
+    @extend %btn;
+    background-color: $brand-info;
 }

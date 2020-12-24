@@ -1,0 +1,52 @@
+%full-size {
+    width: 100%;
+    height: 100%;
+}
+
+%flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+%flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+html, body {
+  @extend %full-size;
+}
+
+body {
+    @extend %flex-column;
+    font-family: $font-family;
+    font-size: $font-size;
+    font-weight: $font-weight;
+    color: $text-color;
+    background-color: $body-bg;
+}
+
+header {
+    @extend %flex-row;
+    background-color: $header-bg; 
+    padding: $container;
+
+    * {
+        padding: $input-padding;
+        color: $white;
+    }
+}
+
+main {
+    margin: $input-padding;
+    padding: $container;
+}
+
+footer {
+    @extend %flex-row;
+    height: 20px;
+    background-color: $header-bg;
+    padding: $container;
+}

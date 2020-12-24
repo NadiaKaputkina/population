@@ -1,0 +1,45 @@
+//color
+$brand-primary: #37a000;
+$brand-primary-light: #a4dd83;
+$brand-primary-lightest: #ebf7ec;
+$brand-success: #008329;
+$brand-info: #008329;
+$brand-complimentary-darkest: #1d4354;
+
+$white: #fff;
+$black: #000;
+$gray-1: #222;
+$gray-2: #656565;
+$gray-3: #a0a0a0;
+$gray-4: #e0e0e0;
+$gray-5: #f2f2f2;
+$gray-6: #f9f9f9;
+$gray-7: #d1d1d1;
+$gray-8: #f1f2f4;
+
+//font
+$font-family: system-ui;
+$font-size: 14px;
+$font-weight: normal;
+$line-height: 18px;
+
+//size
+$btn-padding: 10px 12px;
+$input-padding: 10px;
+$container-padding: 0 30px;
+$radius-1: 4px;
+$radius-2: 6px;
+
+//---
+$container: $container-padding;
+
+$body-bg: $gray-5;
+$header-bg: $brand-complimentary-darkest;
+
+$text-color: $gray-1;
+$link-color: $brand-primary;
+$link-hover-color: $brand-info;
+
+$btn-radius: $radius-1;
+
+$border-base: 1px solid $gray-4;

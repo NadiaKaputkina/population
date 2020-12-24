@@ -8,16 +8,27 @@ const permissions = async function(req, res, next) {
         return res.redirect('/login')
     } 
 
-    Accounts.findByPk(accountId)
-    .then(account => {
-        const { Password, ...accountWithoutPassword } = account;
-
-        req.params.accountData = accountWithoutPassword;
-        next();
+    const account = await Accounts.findByPk(accountId, {
+        attributes: ['Id', 'FirstName', 'LastName', 'RoleId', 'Email']
     })
-    .catch(error => res.redirect('/login'))
-    // .catch(() => next({ statusCode: 404, error: true, message: 'Пользователь не найден' }))
-    
+
+    if (account === null) {
+        next({ statusCode: 404, error: true, message: 'Пользователь не найден' })
+    } else {
+        const { Id, FirstName, LastName, RoleId, Email } = account;
+        
+        const Role = Accounts.getAccountRole(RoleId);
+
+        req.params.accountData = {
+            Id,
+            FirstName,
+            LastName,
+            Role,
+            Email
+        };
+
+        next();
+    }
 }
 
 module.exports = permissions;

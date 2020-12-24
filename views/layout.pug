@@ -4,6 +4,12 @@ html
     title= title
     link(rel='stylesheet', href=process.env.APP_URL_FRONT + 'stylesheets/style.css')
   body
-    block header
-    block content
+    header
+      block header
+
+    main  
+      block content
+
+    footer
+        
     script(src=process.env.APP_URL_FRONT + 'javascripts/app.js')

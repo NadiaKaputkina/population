@@ -1,6 +1,8 @@
+@import 'reset';
+@import 'variables';
+
+@import 'layout';
+@import 'forms';
+
 @import 'buttons';
 @import 'inputs';
-
-body {
-    background-color: brown;
-}

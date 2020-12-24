@@ -15,14 +15,13 @@ const Image = require('../models').Image;
 
 /* GET users listing. */
 router.get('/', auth, permissions, function(req, res, next) {
-  const { FirstName, LastName } = req.params.accountData;
- console.log(req.params.accountData)
+  const currentAccount = req.params.accountData;
 
   Users.findAll({
     include: [Sexes, MaritalStatuses],
     order: ['Id']
   })
-    .then(users => res.render('users', { users, FirstName, LastName }) )
+    .then(users => res.render('users', { users, currentAccount }) )
     .catch(error => res.render('error', { error }) )
 });
 
