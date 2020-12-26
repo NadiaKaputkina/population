@@ -1,15 +1,65 @@
 %text-field {
     padding: $input-padding;
+    border: $border-base;
+    border-radius: $input-radius;
+
+    &:focus,
+    &:hover,
+    &:active {
+        border: $border-base-hover;
+        @extend %shadow-transition;
+        outline: $outline-none;
+    }
+}
+
+%block {
+    padding: $block-padding;
+    background-color: $block-bg;
+    border: $border-block;
+    box-shadow: $card-shadow;
+}
+
+%title {
+    color: $label-color;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: inherit;
+}
+
+.extended-filter {
+    @extend %flex-row;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 
-    .gr-label {
-        
+    .form-label {
+        color: $label-color;
     }
 
-    .gr-input {
-        
+    .form-input {
+        @extend %text-field;
+    }
+}
+
+.block {
+    @extend %block;
+    margin-bottom: 15px;
+
+    .block-title {
+        @extend %title;
+    }
+}
+
+.card {
+    @extend %block;
+    @extend %flex-column;
+    margin: 50px auto;
+    width: 300px;
+
+    .card-title {
+        @extend %title;
+        text-align: center;
+        margin-bottom: 15px;
     }
 }

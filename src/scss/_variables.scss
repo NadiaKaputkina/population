@@ -19,14 +19,16 @@ $gray-8: #f1f2f4;
 
 //font
 $font-family: system-ui;
-$font-size: 14px;
+$font-size: 16px;
 $font-weight: normal;
 $line-height: 18px;
 
 //size
 $btn-padding: 10px 12px;
-$input-padding: 10px;
+$input-padding: 6px 10px;
 $container-padding: 0 30px;
+$block-padding: 20px;
+
 $radius-1: 4px;
 $radius-2: 6px;
 
@@ -35,11 +37,20 @@ $container: $container-padding;
 
 $body-bg: $gray-5;
 $header-bg: $brand-complimentary-darkest;
+$block-bg: $gray-6;
 
 $text-color: $gray-1;
+$label-color: $brand-success;
+
 $link-color: $brand-primary;
 $link-hover-color: $brand-info;
 
 $btn-radius: $radius-1;
+$input-radius: $radius-1;
 
 $border-base: 1px solid $gray-4;
+$border-base-hover: 1px solid $brand-success;
+$border-block: none;
+
+$card-shadow: 0 1px 9px rgba(15,18,18,.35);
+$outline-none: none;

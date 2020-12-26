@@ -32,6 +32,7 @@ header {
     @extend %flex-row;
     background-color: $header-bg; 
     padding: $container;
+    min-height: 50px;
 
     * {
         padding: $input-padding;
@@ -42,11 +43,12 @@ header {
 main {
     margin: $input-padding;
     padding: $container;
+    flex-shrink: 0 
 }
 
 footer {
     @extend %flex-row;
-    height: 20px;
+    min-height: 20px;
     background-color: $header-bg;
     padding: $container;
 }

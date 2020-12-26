@@ -1,8 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-const Sexes = require('../models').Sexes;
-const MaritalStatuses = require('../models').MaritalStatuses;
+const auth = require('./middleware/auth');
+const permissions = require('./middleware/permissions');
+
+const db = require('../models');
+const Sexes = db.Sexes;
+const MaritalStatuses = db.MaritalStatuses;
 
 /* GET home page. */
 router.get('/get-filters', async function(req, res, next) {

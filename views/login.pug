@@ -1,6 +1,17 @@
-extends layout
+<!DOCTYPE html>
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title= title
+  body
+    header
 
-block content
-  div#app
-    login-page
-    p=errorLogin
+    main  
+      div#app
+        login-page
+
+    footer
+    
+    script(src=process.env.APP_URL_FRONT + 'javascripts/app.js')
+  

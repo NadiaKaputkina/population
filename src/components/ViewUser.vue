@@ -1,41 +1,48 @@
 <template>
-    <div class="wrap">
+    <div>
         <nav>
-            <a href="/users">Список</a>
+            <a href="/users" class="link">Список</a>
 
             <button type="button" 
+                class="btn"
                 v-if="!isEditMode"
                 @click="isEditMode = !isEditMode">Edit</button>
 
             <template v-else>
-                <button type="button" 
+                <button type="button" class="btn"
                     @click="onCancel">Cancel</button>
-                <button type="button" 
+                <button type="button" class="btn"
                     @click="onSave">Save</button>
-                <button type="button"
+                <button type="button" class="btn"
                     @click="onClickDelete">Delete</button>
             </template>
         </nav>
 
-        <fieldset class="name-wrap">
+        <fieldset class="block">
+            <legend class="block-title">Имя:</legend>
             <div>
                 <img :src="photoURL" :title="photoTitle" width="200" height="auto"/> 
                 <input type="file" id="photo" name="photo" @change="onChangeFileUpload" accept="image/*" :disabled="!isEditMode"/>
             </div>
-            <div>
-            <label> 
-                Имя
-                <input type="text" :readonly="!isEditMode" v-model="user.FirstName"/>
-            </label>
 
-            <label>
-                Фамилия
-                <input type="text" :readonly="!isEditMode" v-model="user.LastName"/>
+            <div class="form-group">
+            <label class="form-label"> 
+                Имя
+                <input type="text" class="form-input" :readonly="!isEditMode" v-model="user.FirstName"/>
             </label>
+            </div>
             
-            <label>
+            <div class="form-group">
+            <label class="form-label"> 
+                Фамилия
+                <input type="text" class="form-input" :readonly="!isEditMode" v-model="user.LastName"/>
+            </label>
+            </div>
+            
+            <div class="form-group">
+            <label class="form-label"> 
                 Пол
-                <select :disabled="!isEditMode" v-model="user.SexId">
+                <select class="form-input" :disabled="!isEditMode" v-model="user.SexId">
                     <option v-for="sex of sexes" 
                             :key="sex.Id" 
                             :value="sex.Id">
@@ -46,102 +53,131 @@
             </div>
         </fieldset>
 
-        <fieldset>
-            <legend>Рождение:</legend>
-            <label>
-                Дата рождения
-                <input type="date" :readonly="!isEditMode" v-model="user.DateOfBirth"/>
-            </label>
-
-            <label>
-                Место рождения
-                <input type="text" :readonly="!isEditMode" />
-            </label>
-
-            <a href="" @click.prevent="getParents(user.Id)">Показать родителей</a>
-
-            <relative-user v-if="isShowParentsTable" 
-                title="Родители" 
-                :userProp="userParents"></relative-user>
-            <p v-else>{{userParentsNotFoundText}}</p>
-
-            <button type="button" v-show="isEditMode" :disabled="isHaveParents" @click="addParent">Добавить родителя</button>
-        </fieldset>
-
-        <fieldset disabled="false">
-            <legend>Смерть:</legend>
-            <label>
-                 Дата смерти
-                <input type="date" :readonly="!isEditMode" v-model="user.DateOfDeath"/>
-            </label>
-
-            <label>
-                Место смерти
-                <input type="text" :readonly="!isEditMode" />
-            </label>
-        </fieldset>
-
-        <fieldset>
-            <legend>Документы:</legend>
-            <label>
-                Личный номер
-                <input type="text" :readonly="!isEditMode" v-model="user.IdentificationNumber"/>
-            </label>
-
-            <label>
-                Документ
-                <select :disabled="!isEditMode" v-model="user.documentId">
-                    <!-- <option v-for="sex of sexes" 
-                            :key="sex.Id" 
-                            :value="sex.Id">
-                        {{sex.Title}}
-                    </option> -->
-                    <option value="1">Паспорт</option>
-                    <option value="2">Вид на жительство</option>
-                    <option value="3">Другое</option>
-                </select>
-            </label>
-
-            <label>
-                Номер
-                <input type="text" :readonly="!isEditMode"/>
-            </label>
-
-            <label>
-                Дата выдачи
-                <input type="date" :readonly="!isEditMode" />
-            </label>
-            <label>
-                Кем выдан
-                <input type="text" :readonly="!isEditMode"/>
-            </label>
-            <label>
-                Срок действия
-                <input type="date" :readonly="!isEditMode"/>
-            </label>
-        </fieldset>
-
-        <fieldset>
-            <legend>Семейное положение:</legend>
-            <label>
-                Семейное положение
-                <select :disabled="!isEditMode" v-model="user.MaritalStatusId">
-                    <option v-for="status of maritalStatuses" 
-                            :key="status.Id" 
-                            :value="status.Id">
-                        {{status.Status}}
-                    </option>
-                </select>
-            </label>
+        <fieldset class="block">
+            <legend class="block-title">Рождение:</legend>
         
-            <a href="" @click.prevent="getChildren(user.Id)">Показать детей</a>
+            <div class="form-group">
+                <label class="form-label"> 
+                    Дата рождения
+                    <input type="date" class="form-input" :readonly="!isEditMode" v-model="user.DateOfBirth"/>
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label"> 
+                    Место рождения
+                    <input type="text" class="form-input" :readonly="!isEditMode" />
+                </label>
+            </div>
 
-            <relative-user v-if="isShowChildrenTable" 
-                title="Дети" 
-                :userProp="userChildren"></relative-user>
-            <p v-else>{{userChildrenNotFoundText}}</p>
+            <div class="form-group">
+                <a href="" class="link" @click.prevent="getParents(user.Id)">Показать родителей</a>
 
-            <button type="button" v-show="isEditMode" @click="addChild">Добавить ребенка</button>
+                <relative-user v-if="isShowParentsTable" 
+                    title="Родители" 
+                    :userProp="userParents"></relative-user>
+                <p v-else>{{userParentsNotFoundText}}</p>
+
+                <button type="button" class="btn" v-show="isEditMode" :disabled="isHaveParents" @click="addParent">Добавить родителя</button>
+            </div>
+        </fieldset>
+
+        <fieldset class="block" disabled="false">
+            <legend class="block-title">Смерть:</legend>
+            <div class="form-group">
+                <label class="form-label"> 
+                    Дата смерти
+                    <input type="date" class="form-input" :readonly="!isEditMode" v-model="user.DateOfDeath"/>
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label"> 
+                    Место смерти
+                    <input type="text" class="form-input" :readonly="!isEditMode" />
+                </label>
+            </div>
+        </fieldset>
+
+        <fieldset class="block">
+            <legend class="block-title">Документы:</legend>
+            <div class="form-group">
+                <label class="form-label"> 
+                    Личный номер
+                    <input type="text" class="form-input" :readonly="!isEditMode" v-model="user.IdentificationNumber"/>
+                </label>
+            </div>
+
+           <div class="form-group">
+                <label class="form-label"> 
+                    Документ
+                    <select class="form-input" :disabled="!isEditMode" v-model="user.documentId">
+                        <!-- <option v-for="sex of sexes" 
+                                :key="sex.Id" 
+                                :value="sex.Id">
+                            {{sex.Title}}
+                        </option> -->
+                        <option value="1">Паспорт</option>
+                        <option value="2">Вид на жительство</option>
+                        <option value="3">Другое</option>
+                    </select>
+                </label>
+           </div>
+
+            <div class="form-group">
+                <label class="form-label"> 
+                    Номер
+                    <input type="text" class="form-input" :readonly="!isEditMode"/>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"> 
+                    Дата выдачи
+                    <input type="date" class="form-input" :readonly="!isEditMode" />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"> 
+                    Кем выдан
+                    <input type="text" class="form-input" :readonly="!isEditMode"/>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label"> 
+                    Срок действия
+                    <input type="date" class="form-input" :readonly="!isEditMode"/>
+                </label>
+            </div>
+        </fieldset>
+
+        <fieldset class="block">
+            <legend class="block-title">Семейное положение:</legend>
+            <div class="form-group">
+                <label class="form-label"> 
+                    Семейное положение
+                    <select class="form-input" :disabled="!isEditMode" v-model="user.MaritalStatusId">
+                        <option v-for="status of maritalStatuses" 
+                                :key="status.Id" 
+                                :value="status.Id">
+                            {{status.Status}}
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <a href="" class="link" @click.prevent="getChildren(user.Id)">Показать детей</a>
+
+                <relative-user v-if="isShowChildrenTable" 
+                    title="Дети" 
+                    :userProp="userChildren"></relative-user>
+                <p v-else>{{userChildrenNotFoundText}}</p>
+
+                <button type="button" class="btn" v-show="isEditMode" @click="addChild">Добавить ребенка</button>
+            </div>
         </fieldset>
    
         <Modal type="Добавить родителя"
@@ -260,7 +296,7 @@
             getPhotoByUser() {
                 const UserId = this.user.Id;
 
-                fetch('/users/get-photo-by-user', {
+                fetch('/get-photo-by-user', {
                     method: 'POST',
                     body: JSON.stringify({ UserId: UserId }),
                     headers: {
@@ -379,7 +415,7 @@
                     formData.append('Title', `${this.user.LastName} ${this.user.FirstName}`);
                     formData.append('UserId', this.user.Id)
 
-                    fetch('/users/upload', {
+                    fetch('/upload', {
                         method: 'POST',
                         body: formData
                     })

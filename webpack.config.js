@@ -20,7 +20,7 @@ module.exports = {
             test: /\.vue$/,
             loader: 'vue-loader'
         }, {
-            test: /\.[c/sa/sc]ss$/,
+            test: /\.scss$/,
             use: [
                 process.env.NODE_ENV !== "production"
                   ? "style-loader"

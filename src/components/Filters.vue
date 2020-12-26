@@ -1,46 +1,56 @@
 <template>
-    <form>
-        <input type="search" placeholder="Введите имя или фамилию"
-            v-model="selectedName"/>
-       
-        <label>
-            Пол: 
-            <select v-model="selectedSex">
-                <option :value=null>All</option>
-                <option v-for="sex of sexes" 
-                        :key="sex.Id" 
-                        :value="sex.Id">
-                    {{sex.Title}}
-                </option>
-            </select>
-        </label>
+    <form class="extended-filter">
+        <div class="form-group">
+            <input type="search" class="form-input" placeholder="Введите имя или фамилию"
+                v-model="selectedName"/>
+        </div>
 
-        <label>
-            Семейный статус: 
-            <select v-model="selectedMaritalStatus">
-                <option :value=null>All</option>
-                <option v-for="status of maritalStatuses" 
-                        :key="status.Id" 
-                        :value="status.Id">
-                    {{status.Status}}
-                </option>
-            </select>
-        </label>
+        <div class="form-group">
+            <label class="form-label">
+                Пол: 
+                <select v-model="selectedSex" class="form-input">
+                    <option :value=null>All</option>
+                    <option v-for="sex of sexes" 
+                            :key="sex.Id" 
+                            :value="sex.Id">
+                        {{sex.Title}}
+                    </option>
+                </select>
+            </label>
+        </div>
 
-        <label>
-            Есть дети:
-            <input type="checkbox" id="checkbox" v-model="hasChild">
-        </label>
+        <div class="form-group">
+            <label class="form-label">
+                Семейный статус: 
+                <select v-model="selectedMaritalStatus" class="form-input">
+                    <option :value=null>All</option>
+                    <option v-for="status of maritalStatuses" 
+                            :key="status.Id" 
+                            :value="status.Id">
+                        {{status.Status}}
+                    </option>
+                </select>
+            </label>
+        </div>
 
-        <label>
-            Количество детей: 
-            <input type="number" placeholder="0"
-                v-model="countOfChildren"/>
-        </label>
+        <div class="form-group">
+            <label class="form-label">
+                Есть дети:
+                <input type="checkbox" id="checkbox" class="form-input" v-model="hasChild">
+            </label>
+        </div>
 
-        <button type="button" v-if="isShowClearBtn" @click="onClearFilter">Очистить</button>
+        <div class="form-group">
+            <label class="form-label">
+                Количество детей: 
+                <input type="number" placeholder="0" class="form-input"
+                    v-model="countOfChildren"/>
+            </label>
+        </div>
 
-        <button type="button" @click="onSearch">Поиск</button>
+        <button type="button" class="btn btn-clear" v-if="isShowClearBtn" @click="onClearFilter">Очистить</button>
+
+        <button type="button" class="btn" @click="onSearch">Поиск</button>
     </form>
 </template>
 

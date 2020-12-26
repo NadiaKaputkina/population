@@ -1,0 +1,34 @@
+%btn {
+    padding: $btn-padding;
+    background-color: $brand-primary;
+    color: $white;
+    border-color: transparent;
+    border-radius: $btn-radius;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.btn {
+    @extend %btn;
+    
+    &:hover,
+    &:active,
+    &:focus {
+        @extend %btn;
+        background-color: $brand-info;
+        @extend %shadow-transition;
+        outline: $outline-none;
+    }
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.link {
+    color: $link-color;
+    
+    &:hover {
+        color: $link-hover-color;
+    }
+}

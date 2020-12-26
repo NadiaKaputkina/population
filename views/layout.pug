@@ -1,15 +1,20 @@
-doctype html
-html
+<!DOCTYPE html>
+html(lang="en")
   head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title= title
-    link(rel='stylesheet', href=process.env.APP_URL_FRONT + 'stylesheets/style.css')
   body
     header
-      block header
+      if (currentAccount)
+        p=currentAccount.Role + ': ' + currentAccount.FirstName + ' ' + currentAccount.LastName
+        a(href='/auth/signout') Log Out
+      else
+        a(href='/auth/signin') Log In
 
     main  
       block content
 
     footer
-        
+    
     script(src=process.env.APP_URL_FRONT + 'javascripts/app.js')

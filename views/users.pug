@@ -1,12 +1,5 @@
 extends layout
 
-block header
-  if (currentAccount)
-    p=currentAccount.Role + ': ' + currentAccount.FirstName + ' ' + currentAccount.LastName
-    a(href='/login') Log Out
-  else
-    a(href='/login') Log In
-
 block content
   div#app
     get-users(:props-users=users)
