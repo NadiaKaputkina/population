@@ -9,8 +9,11 @@ const permissions = require('./middleware/permissions');
 router.get('/signin', function(req, res, next) {
     res.render('login')
 });
-
 router.post('/signin', authC.signin);
+
+router.get('/signup', function(req, res, next) {
+    res.render('registration')
+});
 router.post('/signup', auth, permissions, authC.signup);
 
 router.get('/signout', function(req, res, next) {

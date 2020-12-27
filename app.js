@@ -10,6 +10,7 @@ const authRouter = require('./routes/auth.routes');
 const usersRouter = require('./routes/users.routes');
 const filtersRouter = require('./routes/filters.routes');
 const uploadRouter = require('./routes/upload.routes');
+const rolesRouter = require('./routes/roles.routes');
 
 const db = require('./models');
 
@@ -34,6 +35,7 @@ app.use('/', filtersRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/', uploadRouter);
+app.use('/roles', rolesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

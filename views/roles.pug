@@ -1,0 +1,7 @@
+
+extends layout
+
+block content
+  - var propRoles = ['@superAdmin', '@admin', '@viewer'];
+  - var propActions = ['view', 'create', 'update', 'delete'];
+  roles-page(:prop-roles=propRoles, :prop-actions=propActions)

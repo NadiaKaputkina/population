@@ -10,6 +10,10 @@
         @extend %shadow-transition;
         outline: $outline-none;
     }
+
+    &.error {
+        border: $border-error;
+    }
 }
 
 %block {
@@ -24,6 +28,11 @@
     font-weight: bold;
     text-transform: uppercase;
     background-color: inherit;
+    margin-bottom: 15px;
+}
+
+.text-error {
+    color: $red;
 }
 
 .extended-filter {

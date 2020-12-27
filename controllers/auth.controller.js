@@ -19,18 +19,18 @@ exports.signin = async (req, res) => {
     })
     .then(account => {
         if (!account) {
-            res.status(404).send({ email: 'Ошибка аутентификации. Пользователь не найден.' })
+            res.status(404).render('login', { email: 'Ошибка аутентификации. Пользователь не найден.' })
         } else {
             const isPwdCompare = Accounts.comparePassword(password, account.Password);
     
             if (isPwdCompare) {
                 //set JWT token
                 const token = jwt.sign({ id: account.Id }, config.jwt_secret, { expiresIn: '1d'});
-                
+                console.log('-----------------------');
                 res.cookie('jwt_token', token, { maxAge: 24*60*60*1000 })
                 res.redirect('/')
             } else {
-                res.status(404).send({ password: 'Ошибка аутентификации. Неправильный пароль.' })
+                res.status(404).render('login', { password: 'Ошибка аутентификации. Неправильный пароль.' })
             }
         }
     })

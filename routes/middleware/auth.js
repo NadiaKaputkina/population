@@ -7,7 +7,7 @@ const auth = async function(req, res, next) {
         
         next();
     } catch (e) {
-        return res.redirect('/login')
+        return res.redirect('/auth/signin')
     }
 }
 

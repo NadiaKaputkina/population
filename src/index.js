@@ -3,9 +3,12 @@ import './scss/index.scss';
 window.Vue = require('vue');
 
 Vue.component('login-page', require('./components/LoginPage.vue').default);
+Vue.component('registration-page', require('./components/RegistartionPage.vue').default);
 
 Vue.component('modal', require('./components/Modal.vue').default);
 Vue.component('modal-dialog', require('./components/ModalDialog.vue').default);
+
+Vue.component('roles-page', require('./components/RolesPage.vue').default);
 
 Vue.component('get-users', require('./components/GetUsers.vue').default);
 Vue.component('view-user', require('./components/ViewUser.vue').default);

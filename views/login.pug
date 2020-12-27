@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title= title
-  body
-    header
+extends layout
 
-    main  
-      div#app
-        login-page
-
-    footer
-    
-    script(src=process.env.APP_URL_FRONT + 'javascripts/app.js')
-  
+block content
+    login-page(error-email=email error-password=password)

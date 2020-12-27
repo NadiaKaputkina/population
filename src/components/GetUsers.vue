@@ -1,9 +1,9 @@
 <template>
     <div>
         <filters @get-filtered-data="getFilteredData"></filters>
-        <table>
-            <thead>
-                <tr>
+        <table class="table">
+            <thead class="thead">
+                <tr class="trow">
                     <th>Номер</th>
                     <th>Имя</th>
                     <th>Фамилия</th>
@@ -14,8 +14,9 @@
                     <th>Дата смерти</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="tbody">
                 <tr v-for="user of users" :key="user.Id"
+                    class="trow"
                     @click="showUser(user.Id)">
                     <td>{{ user.Id }}</td>
                     <td>{{ user.FirstName }}</td>

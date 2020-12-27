@@ -21,7 +21,11 @@
     }
 }
 
-.btn-block {
+.btn-circle {
+    
+}
+
+.w-100 {
     width: 100%;
 }
 
@@ -31,4 +35,33 @@
     &:hover {
         color: $link-hover-color;
     }
+}
+
+.table {
+    border: $border-table;
+    border-collapse: collapse;
+
+    .thead {
+
+    }
+
+    .tbody {
+
+    }
+
+    .trow {
+        &:nth-child(2n) {
+            background-color: $row-bg;
+        }
+
+        &:hover {
+            background-color: $row-bg-hover;
+        }
+    }
+
+    th, td {
+        border: $border-table;
+        padding: $cell-padding;
+    }
+
 }

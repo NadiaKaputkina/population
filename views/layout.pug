@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+DOCTYPE 
 html(lang="en")
   head
     meta(charset="UTF-8")
@@ -8,13 +8,16 @@ html(lang="en")
     header
       if (currentAccount)
         p=currentAccount.Role + ': ' + currentAccount.FirstName + ' ' + currentAccount.LastName
+        a(href='/roles') Роли
         a(href='/auth/signout') Log Out
       else
         a(href='/auth/signin') Log In
 
-    main  
-      block content
+    main
+      div#app  
+        block content
 
     footer
-    
+      block footer
+      
     script(src=process.env.APP_URL_FRONT + 'javascripts/app.js')

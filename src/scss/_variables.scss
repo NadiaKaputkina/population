@@ -6,6 +6,7 @@ $brand-success: #008329;
 $brand-info: #008329;
 $brand-complimentary-darkest: #1d4354;
 
+$red: #f00;
 $white: #fff;
 $black: #000;
 $gray-1: #222;
@@ -28,6 +29,7 @@ $btn-padding: 10px 12px;
 $input-padding: 6px 10px;
 $container-padding: 0 30px;
 $block-padding: 20px;
+$cell-padding: 5px;
 
 $radius-1: 4px;
 $radius-2: 6px;
@@ -38,10 +40,12 @@ $container: $container-padding;
 $body-bg: $gray-5;
 $header-bg: $brand-complimentary-darkest;
 $block-bg: $gray-6;
+$row-bg: $gray-7;
+$row-bg-hover: $brand-primary-light;
 
 $text-color: $gray-1;
+$text-error: $red;
 $label-color: $brand-success;
-
 $link-color: $brand-primary;
 $link-hover-color: $brand-info;
 
@@ -50,7 +54,9 @@ $input-radius: $radius-1;
 
 $border-base: 1px solid $gray-4;
 $border-base-hover: 1px solid $brand-success;
+$border-error: 1px solid $red;
 $border-block: none;
+$border-table: 1px solid $gray-3;
 
 $card-shadow: 0 1px 9px rgba(15,18,18,.35);
 $outline-none: none;
