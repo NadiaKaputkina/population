@@ -1,3 +1,4 @@
+import swal from 'sweetalert';
 import './scss/index.scss';
 
 window.Vue = require('vue');

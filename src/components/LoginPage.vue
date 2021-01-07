@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card login-page">
         <form action="/auth/signin" method="POST">
             <h3 class="card-title">Вход в систему</h3>
             <div class="form-group">

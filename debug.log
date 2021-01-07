@@ -8,3 +8,7 @@
 [1224/134543.006:ERROR:directory_reader_win.cc(43)] FindFirstFile: Системе не удается найти указанный путь. (0x3)
 [1227/124648.101:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Nadia\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\c317ce4c-61b3-44be-b2dc-7f91c4114504: Системе не удается найти указанный путь. (0x3)
 [1227/204454.746:ERROR:directory_reader_win.cc(43)] FindFirstFile: Системе не удается найти указанный путь. (0x3)
+[1229/204414.713:ERROR:directory_reader_win.cc(43)] FindFirstFile: Системе не удается найти указанный путь. (0x3)
+[0101/170226.676:ERROR:directory_reader_win.cc(43)] FindFirstFile: Системе не удается найти указанный путь. (0x3)
+[0104/125548.986:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Nadia\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\b2df5bce-d4c1-4477-a9f7-15ca3703b930: Системе не удается найти указанный путь. (0x3)
+[0105/115503.571:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Nadia\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\b17b5e69-c7d3-43fd-8f29-ef1bf7843d2a: Системе не удается найти указанный путь. (0x3)

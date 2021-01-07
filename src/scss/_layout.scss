@@ -44,6 +44,20 @@ header {
 main {
     margin: $input-padding;
     padding: $container;
+
+    .login-page {
+        .form-group {
+            @extend %flex-column;
+
+            .form-label {
+                margin-bottom: 5px;
+            }
+        }
+
+        .link {
+            text-align: center;
+        }
+    }
 }
 
 footer {

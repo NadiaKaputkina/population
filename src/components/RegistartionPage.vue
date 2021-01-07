@@ -27,12 +27,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password1" class="form-label">Пароль</label>
+                    <label for="password" class="form-label">Пароль</label>
                     <input type="password" 
-                        id="password1"
+                        id="password"
                         class="form-input" 
                         :class="{'error': passwordError}" 
-                        name="password1" 
+                        name="password" 
                         v-model.trim="password" 
                         placeholder="Пароль"/>
                     <p class="text-error" v-if="passwordError">{{errorPassword}}</p>

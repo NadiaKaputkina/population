@@ -1,7 +1,7 @@
-
 extends layout
 
 block content
-  - var propRoles = ['@superAdmin', '@admin', '@viewer'];
-  - var propActions = ['view', 'create', 'update', 'delete'];
-  roles-page(:prop-roles=propRoles, :prop-actions=propActions)
+  - var objects = ['persons', 'marriages', 'documents'];
+  - var rolesR = ['@superAdmin', '@admin', '@viewer'];
+  - var actions = ['view', 'create', 'update', 'delete'];
+  roles-page(:r=roles, :prop-roles=rolesR, :prop-actions=actions, :prop-obj=objects)

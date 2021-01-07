@@ -10,6 +10,7 @@
     "test": "mocha"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
@@ -23,7 +24,9 @@
     "passport-jwt": "^4.0.0",
     "pug": "2.0.0-beta11",
     "sequelize": "^6.3.5",
-    "vue": "^2.6.12"
+    "sweetalert": "^2.1.2",
+    "vue": "^2.6.12",
+    "vuelidate": "^0.7.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

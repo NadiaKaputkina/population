@@ -5,12 +5,15 @@
         
             </header>
             <main class="modal-main">
-                <input type="search" placeholder="Фамилия"
-                    v-model="LastName"/>
-                <input type="text" placeholder="Личный номер" 
-                    v-model="IdentificationNumber"/>
-                
-                <button type="button" @click="searchUserByParams">Поиск</button>
+                <div class="form-group">
+                    <input type="search" placeholder="Фамилия" class="form-input"
+                        v-model="LastName"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Личный номер" class="form-input"
+                        v-model="IdentificationNumber"/>
+                </div>
+                <button type="button" class="btn" @click="searchUserByParams">Поиск</button>
                
                 <ul v-if="isUserFound">
                     <li v-for="user of users" :key="user.Id">
@@ -25,8 +28,8 @@
                 <p v-else>{{userNotFoundText}}</p>
             </main>
             <footer class="modal-footer">
-                <button type="button" @click="onCancel">Отмена</button>
-                <button type="button" :disabled="!isUserFound" @click="onAddParent">Добавить</button> 
+                <button type="button" class="btn" @click="onCancel">Отмена</button>
+                <button type="button" class="btn" :disabled="!isUserFound" @click="onAddParent">Добавить</button> 
             </footer>
         </div>
     </div>
@@ -77,7 +80,7 @@
                     LastName: this.LastName
                 }
 
-                fetch('/users/get-user-by-search-params', {
+                fetch('/users/get-person-by-search-params', {
                     method: 'POST', 
                     body: JSON.stringify(searchParams),
                     headers: {
@@ -94,7 +97,7 @@
                         }
                         this.clearFilter();
                     })
-                    .catch((error) => console.error(err))
+                    .catch((err) => console.error(err))
             }
         }
     }

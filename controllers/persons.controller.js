@@ -129,18 +129,43 @@ exports.getParentByPersonId = async (req, res) => {
     }  
 };
 
-exports.get = async (req, res) => {
+exports.getPersonBySearchParams = async (req, res) => {
+  const { DateOfBirthCurrentUser, IdentificationNumber, LastName } = req.body;
+  
+  let date = new Date(DateOfBirthCurrentUser);
+  let year = date.getFullYear() - 10;
+  date.setFullYear(year);
 
+  Users.findAll({
+      include: [Sexes],
+      where: {
+          IdentificationNumber: {
+            [Op.like]: `${IdentificationNumber}%`
+          },
+          LastName: {
+            [Op.like]: `${LastName}%`
+          },
+          DateOfBirth: {
+            [Op.lte]: date
+          }
+      }
+  })
+  .then(users => {
+    return users.length > 0 ? 
+      res.status(200).send(users) :
+      res.status(200).send({text: 'Не найдено'})
+    })
+  .catch(error => res.status(500).send(error) )
 };
 
-exports.get = async (req, res) => {
+// exports.get = async (req, res) => {
 
-};
+// };
 
-exports.get = async (req, res) => {
+// exports.get = async (req, res) => {
 
-};
+// };
 
-exports.get = async (req, res) => {
+// exports.get = async (req, res) => {
 
-};
+// };

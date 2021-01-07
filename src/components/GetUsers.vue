@@ -77,7 +77,7 @@
 
         methods: {
             getFilteredData(data) {
-                fetch('/users/get-filtered-users', {
+                fetch('/get-filtered-persons', {
                     method: 'POST', 
                     body: JSON.stringify(data),
                     headers: {

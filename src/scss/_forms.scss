@@ -31,6 +31,18 @@
     margin-bottom: 15px;
 }
 
+%modal {
+    position: absolute;
+    @extend %full-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+    left: 0;
+    top: 0;
+    z-index: 100;
+}
+
 .text-error {
     color: $red;
 }
@@ -64,11 +76,35 @@
     @extend %block;
     @extend %flex-column;
     margin: 50px auto;
-    width: 300px;
+    width: auto;
+    max-width: 350px;
 
     .card-title {
         @extend %title;
         text-align: center;
         margin-bottom: 15px;
+    }
+}
+
+.modal {
+    @extend %modal;
+
+    .modal-dialog {
+        @extend %block;
+        max-width: 500px;
+
+        .modal-header {
+            background-color: inherit;
+            min-height: auto;
+        }
+
+        .modal-main {
+            @extend %flex-row;
+        }
+
+        .modal-footer {
+            background-color: inherit;
+            min-height: auto;
+        }
     }
 }

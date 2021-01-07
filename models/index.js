@@ -18,12 +18,16 @@ db.MaritalStatuses = require('./marital_statuses.model')(sequelize, Sequelize);
 db.Children = require('./children.model')(sequelize, Sequelize);
 db.Image = require('./image.model')(sequelize, Sequelize);
 db.Accounts = require('./accounts.model')(sequelize, Sequelize);
+db.SysObjects = require('./sys_objects.model')(sequelize, Sequelize);
+db.ObjectsActions = require('./objects_actions.model')(sequelize, Sequelize);
+db.Roles = require('./roles.model')(sequelize, Sequelize);
+db.RolesActions = require('./roles_actions.model')(sequelize, Sequelize);
 
 Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {
         db[modelName].associate(db)
     }
-})
+});
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
